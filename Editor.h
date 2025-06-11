@@ -1,6 +1,11 @@
 #ifndef EDITOR_H
 #define EDITOR_H
 
+#include "TextBuffer.h"
+#include "Cursor.h"
+#include "Renderer.h"
+#include "InputHandler.h"
+
 #include <string>
 #include <vector>
 
@@ -11,12 +16,14 @@ public:
 
 private:
     void processKey(char key);
-    void moveCursor(int dx, int dy);
-    void render();
+    void enableAnsiEscapeCodes();
 
-    std::vector<std::string> buffer;
-    int cursorX;
-    int cursorY;
+    TextBuffer buffer;
+    Cursor cursor;
+    Renderer renderer;
+    InputHandler inputHandler;
+
+    bool running;
 };
 
 #endif

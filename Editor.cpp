@@ -14,52 +14,86 @@ void Editor::run() {
         renderer.clearScreen();
         renderer.draw(buffer, cursor);
 
-        char key = inputHandler.getKey();
+        Key key = inputHandler.getKey();
         processKey(key);
     }
 }
 
-void Editor::processKey(char key) {
+void Editor::processKey(Key key) {
     int x = cursor.getX();
     int y = cursor.getY();
 
-    if (key == -32 || key == 224) {
-        char arrow = inputHandler.getKey();
-        switch (arrow) {
-            case 72: cursor.moveUp(buffer); break;
-            case 80: cursor.moveDown(buffer); break;
-            case 75: cursor.moveLeft(buffer); break;
-            case 77: cursor.moveRight(buffer); break;
-        }
-    } else if (key == '\r') {
-        std::string line = buffer.getLineConst(y);
-        std::string newLine = line.substr(x);
-
-        line = line.substr(0, x);
-        buffer.insertLine(y + 1);
-        buffer.getLineMutable(y + 1) = newLine;
-
-        cursor.setPosition(0, y + 1);
-    } else if (key == '\t') {
-        const std::string tab = "    ";
-        for (char c : tab) {
-            buffer.insertChar(y, x++, c);
-        }
-        cursor.setPosition(x, y);
-    } else if (key == 27) {
-        running = false;
-    } else if (key == 8) {
-        if (x > 0) {
-            buffer.deleteChar(y, x);
+    switch (key.type) {
+        case KeyType::ArrowUp:
+            cursor.moveUp(buffer);
+            break;
+        case KeyType::ArrowDown:
+            cursor.moveDown(buffer);
+            break;
+        case KeyType::ArrowLeft:
             cursor.moveLeft(buffer);
-        } else if (y > 0) {
-            buffer.getLineMutable(y - 1) += buffer.getLineConst(y);
-            buffer.deleteLine(y);
-            cursor.setPosition(buffer.lineLength(y - 1), y - 1);
+            break;
+        case KeyType::ArrowRight:
+            cursor.moveRight(buffer);
+            break;
+        case KeyType::Enter: {
+            std::string& line = buffer.getLineMutable(y);
+            std::string newLine = line.substr(x);
+            line = line.substr(0, x);
+
+            buffer.insertLine(y + 1);
+            buffer.getLineMutable(y + 1) = newLine;
+            cursor.setPosition(0, y + 1);
+            break;
         }
-    } else {
-        buffer.insertChar(y, x, key);
-        cursor.moveRight(buffer);
+        case KeyType::Tab: {
+            const std::string tab = "    ";
+            for (char c : tab) {
+                buffer.insertChar(y, x++, c);
+            }
+            cursor.setPosition(x, y);
+            break;
+        }
+        case KeyType::Backspace: {
+            if (x > 0) {
+                buffer.deleteChar(y, x);
+                cursor.moveLeft(buffer);
+            } else if (y > 0) {
+                buffer.getLineMutable(y - 1) += buffer.getLineConst(y);
+                buffer.deleteLine(y);
+                cursor.setPosition(buffer.lineLength(y - 1), y - 1);
+            }
+            break;
+        }
+        case KeyType::Escape: 
+            renderer.clearScreen();
+            running = false;
+            break;
+        case KeyType::CtrlA:
+            // TODO: Implement select all
+            break;
+        case KeyType::CtrlC:
+            // TODO: Implement copy
+            break;
+        case KeyType::CtrlX:
+            // TODO: Implement cut
+            break;
+        case KeyType::CtrlV:
+            // TODO: Implement paste
+            break;
+        case KeyType::CtrlZ:
+            // TODO: Implement undo
+            break;
+        case KeyType::CtrlY:
+            // TODO: Implement redo
+            break;
+        case KeyType::Character:
+            buffer.insertChar(y, x, key.ch);
+            cursor.moveRight(buffer);
+            break;
+        default:
+            // Unknown
+            break;
     }
 }
 

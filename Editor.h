@@ -5,6 +5,7 @@
 #include "Cursor.h"
 #include "Renderer.h"
 #include "InputHandler.h"
+#include "FileManager.h"
 
 #include <string>
 #include <vector>
@@ -15,7 +16,7 @@ public:
     void run();
 
 private:
-    void processKey(char key);
+    void processKey(Key key);
     void enableAnsiEscapeCodes();
 
     TextBuffer buffer;

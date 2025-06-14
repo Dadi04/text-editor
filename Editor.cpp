@@ -87,6 +87,39 @@ void Editor::processKey(Key key) {
         case KeyType::CtrlY:
             // TODO: Implement redo
             break;
+        case KeyType::CtrlS: {
+            renderer.clearScreen();
+            std::cout << "Enter file name to save: ";
+
+            std::string path;
+            std::getline(std::cin, path);
+
+            if (fileManager.saveFile(path, buffer)) {
+                std::cout << "File saved. Press any key to continue...";
+            } else {
+                std::cout << "Failed to save file. Press any key to continue...";
+            }
+
+            _getch();
+            break;
+        }
+        case KeyType::CtrlO: {
+            renderer.clearScreen();
+            std::cout << "Enter file name to open: ";
+
+            std::string path;
+            std::getline(std::cin, path);
+
+            if (fileManager.loadFile(path, buffer)) {
+                cursor.setPosition(0, 0);
+                std::cout << "File loaded. Press any key to continue...";
+            } else {
+                std::cout << "Failed to load file. Press any key to continue...";
+            }
+
+            _getch();
+            break;
+        }
         case KeyType::Character:
             buffer.insertChar(y, x, key.ch);
             cursor.moveRight(buffer);

@@ -23,6 +23,7 @@ private:
     Cursor cursor;
     Renderer renderer;
     InputHandler inputHandler;
+    FileManager fileManager;
 
     bool running;
 };

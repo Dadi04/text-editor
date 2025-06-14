@@ -5,7 +5,7 @@ enum class KeyType {
     Character,
     ArrowUp, ArrowDown, ArrowLeft, ArrowRight,
     Enter, Tab, Escape, Backspace,
-    CtrlA, CtrlC, CtrlX, CtrlV, CtrlZ, CtrlY,
+    CtrlA, CtrlC, CtrlX, CtrlV, CtrlZ, CtrlY, CtrlS, CtrlO,
     Unknown,
 };
 

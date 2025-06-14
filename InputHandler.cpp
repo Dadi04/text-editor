@@ -1,5 +1,6 @@
 #include "InputHandler.h"
 #include <conio.h>
+#include <iostream>
 
 Key InputHandler::getKey() {
     char ch = _getch();
@@ -17,6 +18,8 @@ Key InputHandler::getKey() {
     switch (ch) {
         case 1: return { KeyType::CtrlA, 0 };
         case 3: return { KeyType::CtrlC, 0 };
+        case 15: return { KeyType::CtrlO, 0 };
+        case 19: return { KeyType::CtrlS, 0 };
         case 22: return { KeyType::CtrlV, 0 };
         case 24: return { KeyType::CtrlX, 0 };
         case 25: return { KeyType::CtrlY, 0 };

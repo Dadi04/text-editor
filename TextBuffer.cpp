@@ -41,6 +41,11 @@ void TextBuffer::deleteLine(int row) {
     }
 }
 
+void TextBuffer::clear() {
+    lines.clear();
+    lines.push_back("");
+}
+
 const std::string& TextBuffer::getLineConst(int row) const {
     if (row >= 0 && row < lines.size()) {
         return lines[row];

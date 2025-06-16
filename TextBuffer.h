@@ -12,6 +12,7 @@ public:
     void insertLine(int row);
     void deleteLine(int row);
     void clear();
+    void deleteRange(int row, int startCol, int endCol);
     const std::string& getLineConst(int row) const;
     std::string& getLineMutable(int row);
     int lineLength(int row) const;

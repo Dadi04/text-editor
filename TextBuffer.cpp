@@ -46,6 +46,14 @@ void TextBuffer::clear() {
     lines.push_back("");
 }
 
+void TextBuffer::deleteRange(int row, int startCol, int endCol) {
+    if (row >= 0 && row < lines.size()) {
+        if (startCol >= 0 && endCol <= lines[row].size() && startCol < endCol) {
+            lines[row].erase(startCol, endCol - startCol);
+        }
+    }
+}
+
 const std::string& TextBuffer::getLineConst(int row) const {
     if (row >= 0 && row < lines.size()) {
         return lines[row];
@@ -60,7 +68,6 @@ std::string &TextBuffer::getLineMutable(int row) {
         return lines[row];
     }
     return dummy;
-
 }
 
 int TextBuffer::lineLength(int row) const {

@@ -6,6 +6,7 @@
 #include "Renderer.h"
 #include "InputHandler.h"
 #include "FileManager.h"
+#include "Selection.h"
 
 #include <string>
 #include <vector>
@@ -24,6 +25,7 @@ private:
     Renderer renderer;
     InputHandler inputHandler;
     FileManager fileManager;
+    Selection selection;
 
     bool running;
 };

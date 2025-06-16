@@ -3,10 +3,11 @@
 
 #include "TextBuffer.h"
 #include "Cursor.h"
+#include "Selection.h"
 
 class Renderer {
 public:
-    void draw(const TextBuffer& buffer, const Cursor& cursor);
+    void draw(const TextBuffer& buffer, const Cursor& cursor, const Selection& selection);
     void clearScreen();
     void clearLine();
     void hideCursor();
